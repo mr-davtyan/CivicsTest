@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'cards/style.css' %}">
+
+{% if latest_question_list %}
+
+    {% for question in latest_question_list %}
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
+            </div>
+            <div class="flip-card-back">
+                <h3>{{ question.question_group }}</h3>
+                <h1>{{ question.question.question_text }}</h1>
+
+                {% for answer in question.answer_set.all %}
+                    {% if answer.answer_correct %}
+                        <ul>
+                            <li> <h2>{{ answer.answer_text }}</h2></li>
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+    {% endfor %}
+
+{% else %}
+    <p>No cards are available.</p>
+{% endif %}
+
+
+  </body>
+</html>
