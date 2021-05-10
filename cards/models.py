@@ -7,8 +7,10 @@ from django.utils import timezone
 
 class Question(models.Model):
     question_text = models.CharField(max_length=2000, default='')
+    question_number = models.IntegerField(default=0)
     pub_date = models.DateTimeField('date published')
-    question_group = models.CharField(max_length=200, default='')
+    question_group = models.CharField(max_length=600, default='')
+    question_group_title = models.CharField(max_length=600, default='')
 
     def __str__(self):
         return self.question_text
@@ -34,3 +36,7 @@ class Answer(models.Model):
 
     def is_correct(self):
         return self.answer_correct.get_prep_value
+
+
+class QuestionsUpdate(models.Model):
+    file = models.FileField(upload_to='cards/uploads')

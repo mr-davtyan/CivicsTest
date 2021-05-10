@@ -10,21 +10,24 @@
 <link rel="stylesheet" type="text/css" href="{% static 'cards/style.css' %}">
 
 {% if latest_question_list %}
+<div class="cards">
 
     {% for question in latest_question_list %}
         <div class="flip-card">
           <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
+            <div class="flip-card-front" style="background-image: url('https://www.w3schools.com/howto/img_avatar.png');">
+                <p class="question_number">{{ question.question_number }}</p>
+                <p class="question_group_title">{{ question.question_group_title }}</p>
+                <p class="question_group">{{ question.question_group }}</p>
+                <p class="question_text">{{ question.question_text }}</p>
             </div>
             <div class="flip-card-back">
-                <h3>{{ question.question_group }}</h3>
-                <h1>{{ question.question.question_text }}</h1>
+                <p class="question_text">{{ question.question_text }}</p>
 
                 {% for answer in question.answer_set.all %}
                     {% if answer.answer_correct %}
                         <ul>
-                            <li> <h2>{{ answer.answer_text }}</h2></li>
+                            <li> <p class="answer_text">{{ answer.answer_text }}</p></li>
                         </ul>
                     {% endif %}
                 {% endfor %}
@@ -37,6 +40,8 @@
 
 
     {% endfor %}
+
+</div>
 
 {% else %}
     <p>No cards are available.</p>
