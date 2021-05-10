@@ -60,3 +60,18 @@
 @media (min-width: 72em) {
   .cards { grid-template-columns: repeat(3, 1fr); }
 }
+
+p.question_group {
+    color: white;
+    font-size: xx-large;
+}
+p.question_group_title {
+    color: white;
+    font-size: xx-large;
+}
+.question_number {
+    color: white;
+    font-size: xx-large;
+    display: flex;
+    padding: 2em;
+}

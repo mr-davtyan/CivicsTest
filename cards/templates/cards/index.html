@@ -9,6 +9,15 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'cards/style.css' %}">
 
+<form action="{% url 'cards:index' %}" method="get">
+    <label>Format</label>
+    <select name="question_group">
+        <option value="1800s" />1800s</option>
+        <option value="All" />All</option>
+    </select>
+    <input type="submit" value="Filter" />
+</form>
+
 {% if latest_question_list %}
 <div class="cards">
 
@@ -16,7 +25,7 @@
         <div class="flip-card">
           <div class="flip-card-inner">
             <div class="flip-card-front" style="background-image: url('https://www.w3schools.com/howto/img_avatar.png');">
-                <p class="question_number">{{ question.question_number }}</p>
+                <div class="question_number">{{ question.question_number }}</div>
                 <p class="question_group_title">{{ question.question_group_title }}</p>
                 <p class="question_group">{{ question.question_group }}</p>
                 <p class="question_text">{{ question.question_text }}</p>

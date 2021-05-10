@@ -6,7 +6,7 @@ from .models import Question, Answer, QuestionsUpdate
 class AnswerInline(admin.TabularInline):
     model = Answer
     extra = 3
-    list_display = ('question_text', 'question_number', 'question_group', 'question_group_title', 'pub_date', 'was_published_recently')
+    list_display = ('question_text', 'question_number', 'question_group', 'question_group_title', 'pub_date')
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -18,8 +18,8 @@ class QuestionAdmin(admin.ModelAdmin):
         ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
     ]
     inlines = [AnswerInline]
-    list_display = ('question_text', 'question_number', 'question_group', 'question_group_title', 'pub_date', 'was_published_recently')
-    list_filter = ['pub_date']
+    list_display = ('question_text', 'question_number', 'question_group', 'question_group_title', 'pub_date')
+    list_filter = ['question_group', 'question_group_title']
     search_fields = ['question_text']
 
 

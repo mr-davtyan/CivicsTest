@@ -7,10 +7,14 @@ from django.utils import timezone
 
 class Question(models.Model):
     question_text = models.CharField(max_length=2000, default='')
+    question_text.verbose_name = 'question'
     question_number = models.IntegerField(default=0)
+    question_number.verbose_name = '#'
     pub_date = models.DateTimeField('date published')
     question_group = models.CharField(max_length=600, default='')
+    question_group.verbose_name = 'group'
     question_group_title = models.CharField(max_length=600, default='')
+    question_group_title.verbose_name = 'series'
 
     def __str__(self):
         return self.question_text

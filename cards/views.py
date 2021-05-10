@@ -14,22 +14,18 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
-        """
-        Return the last five published questions (not including those set to be
-        published in the future).
-        """
-        # return Question.objects.filter(
-        #     pub_date__lte=timezone.now()
-        # ).order_by('-pub_date')[:5]
-        # """
-        # Return everything
-        # """
-        # return Question.objects.all()
+        if self.request.GET.get('question_group'):
+            featured_filter = self.request.GET.get('question_group')
+            if featured_filter.__eq__("All"):
+                return Question.objects.order_by('?')
+            else:
+                return Question.objects.filter(question_group__contains=featured_filter).order_by('?')
+        else:
+            """
+            Return  in random order. Please note that this approach can be very slow, as documented.
+            """
+            return Question.objects.order_by('?')
 
-        """
-        Return  in random order. Please note that this approach can be very slow, as documented.
-        """
-        return Question.objects.order_by('?')
 
 class DetailView(generic.DetailView):
     model = Question
