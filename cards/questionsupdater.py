@@ -34,9 +34,9 @@ class QuestionsUpdater:
 
         def append_question():
             self.questions.append(QuestionContainer(len(self.questions) + 1,
-                                                    question_text[question_text.find(".") + 2:],
-                                                    question_group[3:],
-                                                    question_group_title.capitalize(),
+                                                    question_text,
+                                                    question_group,
+                                                    question_group_title,
                                                     tuple(answer_text),
                                                     tuple(answer_correct),
                                                     ))
@@ -52,13 +52,13 @@ class QuestionsUpdater:
                     and not line[1:4].__contains__("U"):
                 if len(answer_text) > 0:
                     append_question()
-                question_text = line
+                question_text = line[line.find(".") + 2:]
                 continue
             elif line[1].__eq__(":"):
-                question_group = line
+                question_group = line[3:].strip().replace(" and Other Important Historical Information", "")
                 continue
             elif not line[0].__eq__(".") and not line[0].__eq__("["):
-                question_group_title = line
+                question_group_title = line.capitalize()
                 continue
 
             if line[0].__eq__("."):
@@ -67,10 +67,12 @@ class QuestionsUpdater:
 
         append_question()
 
-# for q in QuestionsUpdater("uploads\\new_2.txt").questions:
-#     print(q.question_id,
-#               q.question_group_title,
-#               q.question_group,
-#               q.question_text,
-#               q.answer_text,
-#               q.answer_correct)
+
+# local print
+# for q in QuestionsUpdater("uploads\\CivicsQuestions2008.txt").questions:
+    # print(q.question_id,
+    #       q.question_group_title,
+    #       q.question_group,
+    #       q.question_text,
+    #       q.answer_text,
+    #       q.answer_correct)

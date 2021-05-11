@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>My test page</title>
-  </head>
-  <body>
+    <title>Cards</title>
+</head>
+<body>
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'cards/style.css' %}">
 
-<form action="{% url 'cards:index' %}" method="get">
-    <label>Format</label>
-    <select name="question_group">
-        <option value="1800s" />1800s</option>
-        <option value="All" />All</option>
-    </select>
-    <input type="submit" value="Filter" />
-</form>
-
 {% if latest_question_list %}
+
+<div class="groups_filter">
+    {% for group in groups_list %}
+    <div class="group_link_container">
+        <a class="group_link outlined" href="{% url 'cards:index' %}?question_group={{ group }}">{{ group }}</a>
+    </div>
+    {% endfor %}
+</div>
+
+
 <div class="cards">
 
     {% for question in latest_question_list %}
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front" style="background-image: url('https://www.w3schools.com/howto/img_avatar.png');">
-                <div class="question_number">{{ question.question_number }}</div>
-                <p class="question_group_title">{{ question.question_group_title }}</p>
-                <p class="question_group">{{ question.question_group }}</p>
-                <p class="question_text">{{ question.question_text }}</p>
+
+    <div class="flip-card">
+        <div class="flip-card-inner"
+             style="background-image: url('{% static 'cards/img/' %}{{ question.question_group|slice:4 }}.png');">
+            <div class="flip-card-front">
+                <div class="question_number outlined">{{ question.question_number }}</div>
+                <div class="question_text outlined">{{ question.question_text }}</div>
+                <div class="question_group outlined">{{ question.question_group }}</div>
             </div>
             <div class="flip-card-back">
-                <p class="question_text">{{ question.question_text }}</p>
-
-                {% for answer in question.answer_set.all %}
-                    {% if answer.answer_correct %}
-                        <ul>
-                            <li> <p class="answer_text">{{ answer.answer_text }}</p></li>
-                        </ul>
-                    {% endif %}
-                {% endfor %}
-
+                <div class="question_text_back outlined">{{ question.question_text }}</div>
+                <div class="answer_text outlined">
+                    <ul class="answer_ul">
+                        {% for answer in question.answer_set.all %}
+                        {% if answer.answer_correct %}
+                        <li>{{ answer.answer_text }}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-          </div>
         </div>
-
-
+    </div>
 
 
     {% endfor %}
@@ -53,9 +53,9 @@
 </div>
 
 {% else %}
-    <p>No cards are available.</p>
+<p>No cards are available.</p>
 {% endif %}
 
 
-  </body>
+</body>
 </html>

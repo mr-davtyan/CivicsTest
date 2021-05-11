@@ -1,10 +1,14 @@
+body {
+    margin: 0;
+}
+
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
   background-color: transparent;
-  width: 20em;
-  height: 20em;
-  padding: 1em;
-  border: 1px solid #f1f1f1;
+  width: 320px;
+  height: 320px;
+  padding: 10px;
+  border: 1px solid #6e767c;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
   display: block;
   margin-left: auto;
@@ -13,12 +17,15 @@
 
 /* This container is needed to position the front and back side */
 .flip-card-inner {
+  color: white;
   position: relative;
   width: 100%;
   height: 100%;
   text-align: center;
   transition: transform 0.8s;
   transform-style: preserve-3d;
+  background-color: #4b5054;
+  background-blend-mode: multiply;
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
@@ -35,43 +42,116 @@
   backface-visibility: hidden;
 }
 
-/* Style the front side (fallback if image is missing) */
-.flip-card-front {
-  background-color: #bbb;
-  color: black;
-}
-
 /* Style the back side */
 .flip-card-back {
-  background-color: dodgerblue;
-  color: white;
   transform: rotateY(180deg);
 }
 
 .cards {
-  max-width: 96em;
-  margin: 0 auto;
   display: grid;
-  grid-gap: 1em;
+  grid-gap: 20px;
+  padding: 20px;
+  background: #303b44;
 }
-@media (min-width: 48em) {
+@media (min-width: 770px) {
   .cards { grid-template-columns: repeat(2, 1fr); }
 }
-@media (min-width: 72em) {
+@media (min-width: 1150px) {
   .cards { grid-template-columns: repeat(3, 1fr); }
 }
+@media (min-width: 1540px) {
+  .cards { grid-template-columns: repeat(4, 1fr); }
+}
 
-p.question_group {
-    color: white;
-    font-size: xx-large;
+div.question_text {
+    font-size: x-large;
+    display: block;
+    text-align: center;
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    padding: 20px;
+    right: 0;
+    left: 0;
 }
-p.question_group_title {
-    color: white;
+
+div.question_number {
     font-size: xx-large;
+    display: table;
+    padding: 4px;
+    border: 2px solid white;
+    border-radius: 50px;
+    min-width: 40px;
+    text-align: center;
+    margin: 4px;
 }
-.question_number {
+
+div.question_group {
+    font-size: x-large;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border-top: 1px solid white;
+    min-height: 2.6em;
+}
+
+div.groups_filter {
+    position:sticky;
+    top: 0;
+    z-index:100;
+    margin: 0;
+    padding: 10px;
+    background: #303b44;
+    box-shadow: 0px 2px 4px 2px #303b44;
+ }
+
+a.group_link {
+  color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 3px;
+    border: 1px solid #6e767c;
+    padding: 10px;
+}
+a.group_link:hover {
+    border-color: #fff;
+}
+
+.group_link_container {
+    display: inline-block;
+    padding: 14px 2px;
+}
+
+.outlined{
     color: white;
-    font-size: xx-large;
-    display: flex;
-    padding: 2em;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
+
+div.question_text_back {
+    font-size: x-large;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    right: 0;
+    left: 0;
+    border-bottom: 1px solid white;
+}
+
+div.answer_text {
+    display: block;
+    text-align: left;
+}
+
+ul.answer_ul {
+    display: block;
+    text-align: left;
+}
+ }

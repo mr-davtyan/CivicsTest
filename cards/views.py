@@ -11,20 +11,27 @@ from .questionsupdater import QuestionsUpdater
 
 class IndexView(generic.ListView):
     template_name = 'cards/index.html'
-    context_object_name = 'latest_question_list'
 
     def get_queryset(self):
         if self.request.GET.get('question_group'):
             featured_filter = self.request.GET.get('question_group')
             if featured_filter.__eq__("All"):
-                return Question.objects.order_by('?')
+                return Question.objects.all().order_by('?')
             else:
                 return Question.objects.filter(question_group__contains=featured_filter).order_by('?')
         else:
             """
             Return  in random order. Please note that this approach can be very slow, as documented.
             """
-            return Question.objects.order_by('?')
+            return Question.objects.all().order_by('?')
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        t_list = list(Question.objects.values_list('question_group', flat=True).distinct())
+        t_list.insert(0, "All")
+        context['groups_list'] = t_list
+        context['latest_question_list'] = self.get_queryset()
+        return context
 
 
 class DetailView(generic.DetailView):
@@ -43,8 +50,9 @@ def update_questions_list(request, question_list_id):
     file_path = QuestionsUpdate.objects.get(id=question_list_id).file.path
 
     # wiping all the existing questions
-    for q_object in Question.objects.all():
-        q_object.delete()
+    with transaction.atomic():
+        for q_object in Question.objects.all():
+            q_object.delete()
 
     # creating new questions and answers
     questions_new = QuestionsUpdater(file_path).questions
