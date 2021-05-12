@@ -1,157 +1,226 @@
 body {
-    margin: 0;
+	margin: 0;
+	background-color: #f2f2f2;
+	font-family: 'RobotoDraft', 'Roboto', sans-serif;
+	-webkit-font-smoothing: antialiased;
 }
 
-/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
-.flip-card {
-  background-color: transparent;
-  width: 320px;
-  height: 320px;
-  padding: 10px;
-  border: 1px solid #6e767c;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+* {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
-/* This container is needed to position the front and back side */
-.flip-card-inner {
-  color: white;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-  background-color: #4b5054;
-  background-blend-mode: multiply;
+h5 {
+	margin: 0px;
+	font-size: 1.4em;
+	font-weight: 700;
 }
 
-/* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-/* Position the front and back side */
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
-  backface-visibility: hidden;
-}
-
-/* Style the back side */
-.flip-card-back {
-  transform: rotateY(180deg);
+.center {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .cards {
-  display: grid;
-  grid-gap: 20px;
-  padding: 20px;
-  background: #303b44;
-}
-@media (min-width: 770px) {
-  .cards { grid-template-columns: repeat(2, 1fr); }
-}
-@media (min-width: 1150px) {
-  .cards { grid-template-columns: repeat(3, 1fr); }
-}
-@media (min-width: 1540px) {
-  .cards { grid-template-columns: repeat(4, 1fr); }
+	display: grid;
+	grid-gap: 20px;
+	padding: 20px;
+	background: #eaeaea;
 }
 
-div.question_text {
-    font-size: x-large;
-    display: block;
-    text-align: center;
-    position: absolute;
-    top: 40%;
-    transform: translateY(-50%);
-    padding: 20px;
-    right: 0;
-    left: 0;
+@media (min-width: 650px) {
+	.cards {
+		grid-template-columns: repeat(2, 1fr);
+	}
 }
 
-div.question_number {
-    font-size: xx-large;
-    display: table;
-    padding: 4px;
-    border: 2px solid white;
-    border-radius: 50px;
-    min-width: 40px;
-    text-align: center;
-    margin: 4px;
+@media (min-width: 960px) {
+	.cards {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (min-width: 1280px) {
+	.cards {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+@media (min-width: 1600px) {
+	.cards {
+		grid-template-columns: repeat(5, 1fr);
+	}
 }
 
 div.question_group {
-    font-size: x-large;
-    display: block;
-    text-align: center;
-    padding: 10px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    border-top: 1px solid white;
-    min-height: 2.6em;
+	font-size: x-large;
+	display: block;
+	text-align: center;
+	padding: 10px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	border-top: 1px solid white;
+	min-height: 2.6em;
 }
 
 div.groups_filter {
-    position:sticky;
-    top: 0;
-    z-index:100;
-    margin: 0;
-    padding: 10px;
-    background: #303b44;
-    box-shadow: 0px 2px 4px 2px #303b44;
- }
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	margin: 0;
+	padding: 10px;
+	background: #303b44;
+	box-shadow: 0px 2px 4px 2px #303b44;
+}
 
 a.group_link {
-  color: white;
-    text-decoration: none;
-    text-align: center;
-    border-radius: 3px;
-    border: 1px solid #6e767c;
-    padding: 10px;
+	color: white;
+	text-decoration: none;
+	text-align: center;
+	border-radius: 3px;
+	border: 1px solid #6e767c;
+	padding: 10px;
 }
+
 a.group_link:hover {
-    border-color: #fff;
+	border-color: #fff;
 }
 
 .group_link_container {
-    display: inline-block;
-    padding: 14px 2px;
+	display: inline-block;
+	padding: 14px 2px;
 }
 
-.outlined{
-    color: white;
-    text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
+.property-card {
+	height: 22em;
+	width: 18em;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	position: relative;
+	-webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	-o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	border-radius: 16px;
+	overflow: hidden;
+	-webkit-box-shadow: 15px 15px 27px #e1e1e3, -15px -15px 27px #ffffff;
+	box-shadow: 15px 15px 27px #e1e1e3, -15px -15px 27px #ffffff;
+	cursor: pointer;
 }
 
-div.question_text_back {
-    font-size: x-large;
-    display: block;
-    text-align: center;
-    padding: 10px;
-    right: 0;
-    left: 0;
-    border-bottom: 1px solid white;
+
+/* Top Half of card, image. */
+
+.property-image {
+	height: 6em;
+	width: 18em;
+	position: Absolute;
+	top: 0px;
+	-webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	-o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 
-div.answer_text {
-    display: block;
-    text-align: left;
+
+/* Bottom Card Section */
+
+.property-description {
+	background-color: #FAFAFC;
+	height: 16em;
+	width: 18em;
+	position: absolute;
+	bottom: 0em;
+	-webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	-o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	padding: 0.5em 1em;
+	text-align: center;
+}
+
+.property-question-number {
+	width: 2.8em;
+	height: 2.8em;
+	background-color: black;
+	position: absolute;
+	bottom: 1em;
+	left: 1em;
+	-webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	-o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+div.question_number {
+	color: white;
+	display: block;
+	text-align: center;
+	top: 50%;
+	position: absolute;
+	transform: translateY(-50%);
+	left: 0;
+	right: 0;
+}
+
+
+/* Property Cards Hover States */
+
+.property-card:hover .property-description {
+	height: 0em;
+	padding: 0px 1em;
+}
+
+.property-card:hover .property-image {
+	height: 22em;
+}
+
+.property-card:hover .property-question-number {
+	background-color: white;
+}
+
+.property-card:hover .property-question-number:hover {
+	background-color: black;
+	cursor: pointer;
+}
+
+.property-card:hover .property-question-number .question_number {
+	color: black;
+}
+
+.property-card:hover .property-question-number:hover .question_number {
+	color: white;
+}
+
+.property-image-title {
+	text-align: center;
+	position: Relative;
+	top: 4em;
+	opacity: 0;
+	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.2s;
+	color: black;
+	font-size: 1.2em;
+	z-index: 60;
+}
+
+.property-card:hover .property-image-title {
+	opacity: 1;
 }
 
 ul.answer_ul {
-    display: block;
-    text-align: left;
+	text-align: left;
+	background: white;
+	padding: 10px 30px;
+	font-size: 0.8em;
 }
- }
+
+
+}
