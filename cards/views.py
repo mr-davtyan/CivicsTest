@@ -1,4 +1,5 @@
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.paginator import Paginator
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -11,38 +12,50 @@ from .questionsupdater import QuestionsUpdater
 
 class IndexView(generic.ListView):
     template_name = 'cards/index.html'
+    questions_all: list
 
     def get_queryset(self):
-        if self.request.GET.get('question_group'):
-            featured_filter = self.request.GET.get('question_group')
-            if featured_filter.__eq__("All"):
-                return Question.objects.all().order_by('?')
+        self.questions_all = Question.objects.all().order_by('question_number')
+        # todo add mix button
+        # todo save mix state
+        questions_for_return = []
+        request = self.request.GET
+        if request.get('question_group'):
+            group_current = request.get('question_group')
+            if group_current.__eq__("All"):
+                return self.questions_all
             else:
-                return Question.objects.filter(question_group__contains=featured_filter).order_by('?')
-        else:
-            """
-            Return  in random order. Please note that this approach can be very slow, as documented.
-            """
-            return Question.objects.all().order_by('?')
+                for q in self.questions_all:
+                    if q.question_group.__eq__(group_current):
+                        questions_for_return.append(q)
+                return questions_for_return
+        return self.questions_all
 
     def get_context_data(self, **kwargs):
+
         context = super(IndexView, self).get_context_data(**kwargs)
-        t_list = list(Question.objects.values_list('question_group', flat=True).distinct())
-        t_list.insert(0, "All")
-        context['groups_list'] = t_list
-        context['latest_question_list'] = self.get_queryset()
+
+        request = self.request.GET
+        current_group = "All"
+        if request.get('question_group'):
+            current_group = request.get('question_group')
+        context['current_group'] = current_group
+
+        groups_list = list(Question.objects.values_list('question_group', flat=True).distinct())
+        groups_list.insert(0, "All")
+        context['groups_list'] = groups_list
+
+        # todo add pagintaor value on the web site
+        paginate_by = 2
+        paginator = Paginator(self.get_queryset(), paginate_by)
+
+        page = 1
+        if request.get('page'):
+            page = request.get('page')
+
+        context['latest_question_list'] = paginator.get_page(page)
+
         return context
-
-
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = 'cards/detail.html'
-
-    def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now())
 
 
 @staff_member_required
