@@ -19,6 +19,7 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
+    # noinspection PyTypeChecker
     @admin.display(
         boolean=True,
         ordering='pub_date',

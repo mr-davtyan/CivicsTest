@@ -11,65 +11,85 @@
 
 {% if latest_question_list %}
 
-<div class="groups_filter">
+<div class="header">
     {% for group in groups_list %}
-    <div class="group_link_container">
-        <a class="group_link outlined" href="{% url 'cards:index' %}?question_group={{ group }}">{{ group }}</a>
+    <div class="group-link-container">
+        <a class="group-link{% ifequal current_group group %} highlighted{% endifequal %}"
+           href="?question_group={{ group }}&num-objects={{ num_objects }}">{{ group }}</a>
     </div>
     {% endfor %}
 </div>
 
+<div class="cards_container">
+    <div class="cards">
 
-<div class="cards">
+        {% for question in latest_question_list %}
 
-    {% for question in latest_question_list %}
-
-    <div class="center">
-        <div class="property-card">
-            <div class="property-image"
-                 style="background-image:url('{% static 'cards/img' %}/{{ question.question_group|slice:5|slugify }}.png')">
-                <div class="property-image-title">
-                    <ul class="answer_ul">
-                        {% for answer in question.answer_set.all %}
-                        {% if answer.answer_correct %}
-                        <li>{{ answer.answer_text }}</li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
+        <div class="center">
+            <div class="property-card">
+                <div class="property-image"
+                     style="background-image:url('{% static 'cards/img' %}/{{ question.question_group|slice:5|slugify }}.png')">
+                    <div class="property-image-title">
+                        <ul class="answer-ul">
+                            {% for answer in question.answer_set.all %}
+                            {% if answer.answer_correct %}
+                            <li>{{ answer.answer_text }}</li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="property-description">
+                    <p> {{ question.question_group }} </p>
+                    <h5>{{ question.question_text }}</h5>
+                </div>
+                <div class="property-question-number">
+                    <div class="question-number"><h5>{{ question.question_number }}</h5></div>
                 </div>
             </div>
-            <div class="property-description">
-                <p> {{ question.question_group }} </p>
-                <h5>{{ question.question_text }}</h5>
-            </div>
-            <div class="property-question-number">
-                <div class="question_number"><h5>{{ question.question_number }}</h5></div>
-            </div>
         </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+
+<div class="footer">
+    <div class="pagination">
+        {% for i in num_objects_array %}
+        <a class="group-link{% ifequal num_objects i %} highlighted{% endifequal %}"
+           href="?question_group={{ current_group }}&num-objects={{ i }}">{{ i }}</a>
+        {% endfor %}
     </div>
 
-    {% endfor %}
 
-</div>
-
-<div class="pagination">
-    <span class="step-links">
-        {% if latest_question_list.has_previous %}
-            <a href="?question_group={{ current_group }}&page=1">&laquo; first</a>
-            <a href="?question_group={{ current_group }}&page={{ latest_question_list.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ latest_question_list.number }} of {{ latest_question_list.paginator.num_pages }}.
+    <div class="pagination">
+        <span class="step-links ">
+            {% if latest_question_list.has_previous %}
+                <a class="group-link" href="?question_group={{ current_group }}&num-objects={{ num_objects }}&page=1">&laquo; first</a>
+                <a class="group-link"
+                   href="?question_group={{ current_group }}&num-objects={{ num_objects }}&page={{ latest_question_list.previous_page_number }}">previous</a>
+            {% endif %}
+            {% if latest_question_list.paginator.num_pages %}
+                 <span class="group-link">Page {{ latest_question_list.number }} of {{ latest_question_list.paginator.num_pages }}</span>
+            {% endif %}
+            {% if latest_question_list.has_next %}
+                <a class="group-link"
+                   href="?question_group={{ current_group }}&num-objects={{ num_objects }}&page={{ latest_question_list.next_page_number }}">next</a>
+                <a class="group-link"
+                   href="?question_group={{ current_group }}&num-objects={{ num_objects }}&page={{ latest_question_list.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
         </span>
+    </div>
 
-        {% if latest_question_list.has_next %}
-            <a href="?question_group={{ current_group }}&page={{ latest_question_list.next_page_number }}">next</a>
-            <a href="?question_group={{ current_group }}&page={{ latest_question_list.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
+    <div class="pagination">
+        <a class="group-link{% if mix_order %} highlighted{% endif %}"
+           href="?question_group={{ current_group }}&num-objects={{ num_objects }}&order=mix">MIX</a>
+        <a class="group-link{% if not mix_order %} highlighted{% endif %}"
+           href="?question_group={{ current_group }}&num-objects={{ num_objects }}&order=straight">SORT</a>
+    </div>
 </div>
-
 
 
 {% else %}

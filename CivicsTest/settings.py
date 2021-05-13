@@ -30,7 +30,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'cards.apps.CardsConfig',
-    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

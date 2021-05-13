@@ -1,3 +1,5 @@
+from random import shuffle
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import Paginator
 from django.db import transaction
@@ -12,55 +14,90 @@ from .questionsupdater import QuestionsUpdater
 
 class IndexView(generic.ListView):
     template_name = 'cards/index.html'
-    questions_all: list
+    # updating the questions on server load
+    questions_all = list(Question.objects.all().order_by('question_number'))
+    paginate_by = "5"
 
     def get_queryset(self):
-        self.questions_all = Question.objects.all().order_by('question_number')
-        # todo add mix button
-        # todo save mix state
         questions_for_return = []
-        request = self.request.GET
-        if request.get('question_group'):
-            group_current = request.get('question_group')
-            if group_current.__eq__("All"):
-                return self.questions_all
+        get_request = self.request.GET
+
+        if not self.request.session.session_key:
+            self.request.session.create()
+        self.request.session.set_expiry(7200)
+
+        if get_request.get('order'):
+            if get_request.get('order').__eq__("straight"):
+                self.request.session['order'] = list(range(0, len(self.questions_all)))
+                self.request.session['order_type'] = "straight"
             else:
-                for q in self.questions_all:
+                user_order = list(range(0, len(self.questions_all)))
+                shuffle(user_order)
+                self.request.session['order'] = user_order
+                self.request.session['order_type'] = "mix"
+
+        all_questions_for_return = []
+        for i in self.request.session.get('order', list(range(0, len(self.questions_all)))):
+            all_questions_for_return.append(self.questions_all[i])
+
+        if get_request.get('question_group'):
+            group_current = get_request.get('question_group')
+            if group_current.__eq__("All"):
+                return all_questions_for_return
+            else:
+                for q in all_questions_for_return:
                     if q.question_group.__eq__(group_current):
                         questions_for_return.append(q)
                 return questions_for_return
-        return self.questions_all
+
+        return all_questions_for_return
 
     def get_context_data(self, **kwargs):
 
         context = super(IndexView, self).get_context_data(**kwargs)
 
-        request = self.request.GET
+        get_request = self.request.GET
+
         current_group = "All"
-        if request.get('question_group'):
-            current_group = request.get('question_group')
+        if get_request.get('question_group'):
+            current_group = get_request.get('question_group')
         context['current_group'] = current_group
 
         groups_list = list(Question.objects.values_list('question_group', flat=True).distinct())
         groups_list.insert(0, "All")
         context['groups_list'] = groups_list
 
-        # todo add pagintaor value on the web site
-        paginate_by = 2
-        paginator = Paginator(self.get_queryset(), paginate_by)
-
         page = 1
-        if request.get('page'):
-            page = request.get('page')
+        if get_request.get('page'):
+            page = get_request.get('page')
 
-        context['latest_question_list'] = paginator.get_page(page)
+        paginate_by_user = self.request.session.get('paginate-by-user', self.paginate_by)
+        if get_request.get('num-objects'):
+            paginate_by_user = get_request.get('num-objects')
+
+        self.request.session['paginate-by-user'] = paginate_by_user
+        context['num_objects'] = paginate_by_user
+        context['num_objects_array'] = ["5", "10", "20", "All"]
+
+        if self.request.session.get('order_type', "straight").__eq__("mix"):
+            context['mix_order'] = True
+        else:
+            context['mix_order'] = False
+
+        if paginate_by_user.__eq__("All"):
+            context['latest_question_list'] = self.get_queryset()
+        else:
+            paginator = Paginator(self.get_queryset(), int(paginate_by_user))
+            context['latest_question_list'] = paginator.get_page(page)
 
         return context
 
 
 @staff_member_required
-def update_questions_list(request, question_list_id):
-    file_path = QuestionsUpdate.objects.get(id=question_list_id).file.path
+def update_questions_list(*args, **kwargs):
+    print(args)
+
+    file_path = QuestionsUpdate.objects.get(id=kwargs["question_list_id"]).file.path
 
     # wiping all the existing questions
     with transaction.atomic():

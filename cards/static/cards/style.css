@@ -55,7 +55,7 @@ h5 {
 	}
 }
 
-div.question_group {
+div.question-group {
 	font-size: x-large;
 	display: block;
 	text-align: center;
@@ -68,30 +68,52 @@ div.question_group {
 	min-height: 2.6em;
 }
 
-div.groups_filter {
+.header {
 	position: sticky;
-	top: 0;
 	z-index: 100;
 	margin: 0;
 	padding: 10px;
 	background: #303b44;
+	top: 0;
 	box-shadow: 0px 2px 4px 2px #303b44;
+	min-height: 8vh;
+	text-align: center;
 }
 
-a.group_link {
+.cards_container {
+    position: relative;
+    min-height: 84vh;
+}
+
+.footer {
+	position: sticky;
+	z-index: 100;
+	margin: 0;
+	padding: 10px;
+	background: #303b44;
+	bottom: 0;
+	box-shadow: 0px -2px 4px 2px #303b44;
+	left: 0;
+	width: 100%;
+	min-height: 8vh;
+	text-align: center;
+}
+
+.group-link {
 	color: white;
 	text-decoration: none;
 	text-align: center;
 	border-radius: 3px;
 	border: 1px solid #6e767c;
 	padding: 10px;
+	cursor: pointer;
 }
 
-a.group_link:hover {
+a.group-link:hover {
 	border-color: #fff;
 }
 
-.group_link_container {
+.group-link-container {
 	display: inline-block;
 	padding: 14px 2px;
 }
@@ -116,7 +138,6 @@ a.group_link:hover {
 	box-shadow: 15px 15px 27px #e1e1e3, -15px -15px 27px #ffffff;
 	cursor: pointer;
 }
-
 
 /* Top Half of card, image. */
 
@@ -151,7 +172,7 @@ a.group_link:hover {
 .property-question-number {
 	width: 2.8em;
 	height: 2.8em;
-	background-color: black;
+	background-color: #303b44;
 	position: absolute;
 	bottom: 1em;
 	left: 1em;
@@ -160,7 +181,7 @@ a.group_link:hover {
 	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-div.question_number {
+div.question-number {
 	color: white;
 	display: block;
 	text-align: center;
@@ -188,15 +209,15 @@ div.question_number {
 }
 
 .property-card:hover .property-question-number:hover {
-	background-color: black;
+	background-color: #303b44;
 	cursor: pointer;
 }
 
-.property-card:hover .property-question-number .question_number {
-	color: black;
+.property-card:hover .property-question-number .question-number {
+	color: #303b44;
 }
 
-.property-card:hover .property-question-number:hover .question_number {
+.property-card:hover .property-question-number:hover .question-number {
 	color: white;
 }
 
@@ -215,12 +236,22 @@ div.question_number {
 	opacity: 1;
 }
 
-ul.answer_ul {
+ul.answer-ul {
 	text-align: left;
 	background: white;
 	padding: 10px 30px;
 	font-size: 0.8em;
 }
+
+.pagination {
+    display: inline-block;
+    margin: 14px 4px;
+}
+
+.highlighted {
+    border: 2px solid #bd7407;
+}
+
 
 
 }
