@@ -21,4 +21,5 @@ urlpatterns = [
     path('', RedirectView.as_view(pattern_name='cards:index')),
     path('cards/', include('cards.urls')),
     path('admin/', admin.site.urls),
+
 ]

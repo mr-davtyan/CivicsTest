@@ -67,12 +67,11 @@ class QuestionsUpdater:
 
         append_question()
 
-
 # local print
-# for q in QuestionsUpdater("uploads\\CivicsQuestions2008.txt").questions:
-    # print(q.question_id,
-    #       q.question_group_title,
-    #       q.question_group,
-    #       q.question_text,
-    #       q.answer_text,
-    #       q.answer_correct)
+# for q in QuestionsUpdater("uploads//CivicsQuestions2008.txt").questions:
+#     print(q.question_id,
+#           q.question_group_title,
+#           q.question_group,
+#           q.question_text,
+#           q.answer_text,
+#           q.answer_correct)

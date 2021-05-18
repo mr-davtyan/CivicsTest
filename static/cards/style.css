@@ -1,0 +1,268 @@
+body {
+	margin: 0;
+	background-color: #f2f2f2;
+	font-family: 'RobotoDraft', 'Roboto', sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+
+* {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+h5 {
+	margin: 0px;
+	font-size: 1.4em;
+	font-weight: 700;
+}
+
+.center {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.cards {
+	display: grid;
+	grid-gap: 20px;
+	padding: 20px;
+	background: #eaeaea;
+}
+
+@media (min-width: 650px) {
+	.cards {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 960px) {
+	.cards {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (min-width: 1280px) {
+	.cards {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+@media (min-width: 1600px) {
+	.cards {
+		grid-template-columns: repeat(5, 1fr);
+	}
+}
+
+div.question-group {
+	font-size: x-large;
+	display: block;
+	text-align: center;
+	padding: 10px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	border-top: 1px solid white;
+	min-height: 2.6em;
+}
+
+.header {
+	position: sticky;
+	z-index: 100;
+	margin: 0;
+	padding: 10px;
+	background: #303b44;
+	top: 0;
+	box-shadow: 0px 2px 4px 2px #303b44;
+	min-height: 8vh;
+	text-align: center;
+}
+
+.cards_container {
+    position: relative;
+    min-height: 84vh;
+}
+
+.footer {
+	position: sticky;
+	z-index: 100;
+	margin: 0;
+	background: #303b44;
+	bottom: 0;
+	box-shadow: 0px -2px 4px 2px #303b44;
+	left: 0;
+	width: 100%;
+	min-height: 8vh;
+	text-align: center;
+}
+
+.group-link {
+	color: white;
+	text-decoration: none;
+	text-align: center;
+	border-radius: 3px;
+	border: 1px solid #6e767c;
+	padding: 10px;
+	cursor: pointer;
+	margin: 2px;
+	display: inline-block;
+}
+
+a.group-link:hover {
+	border-color: #fff;
+}
+
+.group-link-container {
+	display: inline-block;
+}
+
+.property-card {
+	height: 22em;
+	width: 18em;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	position: relative;
+	-webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	-o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	border-radius: 16px;
+	overflow: hidden;
+	-webkit-box-shadow: 15px 15px 27px #e1e1e3, -15px -15px 27px #ffffff;
+	box-shadow: 15px 15px 27px #e1e1e3, -15px -15px 27px #ffffff;
+	cursor: pointer;
+}
+
+/* Top Half of card, image. */
+
+.property-image {
+	height: 6em;
+	width: 18em;
+	position: Absolute;
+	top: 0px;
+	-webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	-o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+
+/* Bottom Card Section */
+
+.property-description {
+	background-color: #FAFAFC;
+	height: 16em;
+	width: 18em;
+	position: absolute;
+	bottom: 0em;
+	-webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	-o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	padding: 0.5em 1em;
+	text-align: center;
+}
+
+.property-question-number {
+	width: 2.8em;
+	height: 2.8em;
+	background-color: #303b44;
+	position: absolute;
+	bottom: 1em;
+	left: 1em;
+	-webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	-o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+div.question-number {
+	color: white;
+	display: block;
+	text-align: center;
+	top: 50%;
+	position: absolute;
+	transform: translateY(-50%);
+	left: 0;
+	right: 0;
+}
+
+
+/* Property Cards Hover States */
+
+.property-card:hover .property-description {
+	height: 0em;
+	padding: 0px 1em;
+}
+
+.property-card:hover .property-image {
+	height: 22em;
+}
+
+.property-card:hover .property-question-number {
+	background-color: white;
+}
+
+.property-card:hover .property-question-number:hover {
+	background-color: #303b44;
+	cursor: pointer;
+}
+
+.property-card:hover .property-question-number .question-number {
+	color: #303b44;
+}
+
+.property-card:hover .property-question-number:hover .question-number {
+	color: white;
+}
+
+.property-image-title {
+	text-align: center;
+	position: Relative;
+	top: 4em;
+	opacity: 0;
+	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.2s;
+	color: black;
+	font-size: 1.2em;
+	z-index: 60;
+}
+
+.property-card:hover .property-image-title {
+	opacity: 1;
+}
+
+ul.answer-ul {
+	text-align: left;
+	background: white;
+	padding: 10px 30px;
+	font-size: 0.8em;
+}
+
+.pagination {
+    display: inline-block;
+    margin: 2px;
+}
+
+.highlighted {
+    border: 2px solid #bd7407;
+}
+
+/* Detecting mobile devices */
+@media only screen and (hover: none) and (pointer: coarse){
+	.header {
+		position: relative;
+	}
+}
+@media only screen and (hover: none) and (pointer: coarse){
+	.footer {
+		position: relative;
+	}
+}
+
+
+}

@@ -89,7 +89,6 @@ div.question-group {
 	position: sticky;
 	z-index: 100;
 	margin: 0;
-	padding: 10px;
 	background: #303b44;
 	bottom: 0;
 	box-shadow: 0px -2px 4px 2px #303b44;
@@ -107,6 +106,8 @@ div.question-group {
 	border: 1px solid #6e767c;
 	padding: 10px;
 	cursor: pointer;
+	margin: 2px;
+	display: inline-block;
 }
 
 a.group-link:hover {
@@ -115,7 +116,6 @@ a.group-link:hover {
 
 .group-link-container {
 	display: inline-block;
-	padding: 14px 2px;
 }
 
 .property-card {
@@ -245,13 +245,24 @@ ul.answer-ul {
 
 .pagination {
     display: inline-block;
-    margin: 14px 4px;
+    margin: 2px;
 }
 
 .highlighted {
     border: 2px solid #bd7407;
 }
 
+/* Detecting mobile devices */
+@media only screen and (hover: none) and (pointer: coarse){
+	.header {
+		position: relative;
+	}
+}
+@media only screen and (hover: none) and (pointer: coarse){
+	.footer {
+		position: relative;
+	}
+}
 
 
 }
