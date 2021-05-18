@@ -6,7 +6,7 @@ which is made up of 100 questions and answers about American government and hist
 The live app can be found by the following this link:  
 http://civicstest.davtyan.net/cards/
 
-![](https://github.com/mr-davtyan/CivicsTest/master/preview.png?raw=true)
+![](https://github.com/mr-davtyan/CivicsTest/blob/master/preview.png?raw=true)
 
 ##Docker image:  
 https://hub.docker.com/repository/docker/davtyan/django-civics-test
