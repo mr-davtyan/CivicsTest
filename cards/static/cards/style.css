@@ -96,6 +96,7 @@ div.question-group {
 	width: 100%;
 	min-height: 8vh;
 	text-align: center;
+	padding: 10px;
 }
 
 .group-link {
@@ -246,6 +247,10 @@ ul.answer-ul {
 .pagination {
     display: inline-block;
     margin: 2px;
+}
+
+.separator {
+    margin-left: 4px;
 }
 
 .highlighted {

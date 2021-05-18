@@ -59,22 +59,17 @@
 
 
 <div class="footer">
-    <div class="pagination">
-        {% for i in num_objects_array %}
-        <a class="group-link{% ifequal num_objects i %} highlighted{% endifequal %}"
-           href="?question_group={{ current_group }}&num-objects={{ i }}">{{ i }}</a>
-        {% endfor %}
-    </div>
-
 
     <div class="pagination">
         <span class="step-links ">
             {% if latest_question_list.has_previous %}
                 <a class="group-link" href="?question_group={{ current_group }}&num-objects={{ num_objects }}&page=1">&laquo; first</a>
                 <a class="group-link"
-                   href="?question_group={{ current_group }}&num-objects={{ num_objects }}&page={{ latest_question_list.previous_page_number }}">previous</a>
+                   href="?question_group={{ current_group }}&num-objects={{ num_objects }}&page={{ latest_question_list.previous_page_number }}">prev</a>
             {% endif %}
-            {% if latest_question_list.paginator.num_pages %}
+            {% if latest_question_list.has_previous and latest_question_list.has_next %}
+                 <span class="group-link"> {{ latest_question_list.number }} / {{ latest_question_list.paginator.num_pages }}</span>
+            {% elif latest_question_list.paginator.num_pages %}
                  <span class="group-link">Page {{ latest_question_list.number }} of {{ latest_question_list.paginator.num_pages }}</span>
             {% endif %}
             {% if latest_question_list.has_next %}
@@ -86,8 +81,14 @@
         </span>
     </div>
 
+
     <div class="pagination">
-        <a class="group-link{% if mix_order %} highlighted{% endif %}"
+        {% for i in num_objects_array %}
+        <a class="group-link{% ifequal num_objects i %} highlighted{% endifequal %}"
+           href="?question_group={{ current_group }}&num-objects={{ i }}">{{ i }}</a>
+        {% endfor %}
+
+        <a class="group-link{% if mix_order %} highlighted{% endif %} separator"
            href="?question_group={{ current_group }}&num-objects={{ num_objects }}&order=mix">MIX</a>
         <a class="group-link{% if not mix_order %} highlighted{% endif %}"
            href="?question_group={{ current_group }}&num-objects={{ num_objects }}&order=straight">SORT</a>
