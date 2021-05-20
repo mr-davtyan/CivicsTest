@@ -3,8 +3,8 @@
 The Civics Practice Application contains the questions and answers from the 2008 version of the civics test 
 which is made up of 100 questions and answers about American government and history.
 
-The live app can be found by the following this link:  
-http://civicstest.davtyan.net/cards/
+The live app (Massachusetts version of tests) can be found by the following this link:  
+http://civicstest.davtyan.net
 
 ![](https://github.com/mr-davtyan/CivicsTest/blob/master/preview.png?raw=true)
 
@@ -13,7 +13,6 @@ https://hub.docker.com/repository/docker/davtyan/django-civics-test
 
 ## Features
 - Django based project.
-- CSS only (no JS) for the main app.
 - View for mobile devices supported.
 - Keeps user session to save the current order and group.
 

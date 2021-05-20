@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
 
 <head>
+    {% if order_changed %}
+        <meta http-equiv="refresh" content="0; URL=?question_group={{ current_group }}&num-objects={{ num_objects }}" />
+    {% endif %}
+    {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cards</title>
     <link rel="shortcut icon" href="{% static 'cards/favicon.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cards/style.css' %}">
+    <script src="{% static 'cards/app.js' %}"></script>
 </head>
 <body>
 
-<link rel="stylesheet" type="text/css" href="{% static 'cards/style.css' %}">
 
 {% if latest_question_list %}
 
@@ -29,7 +33,7 @@
         {% for question in latest_question_list %}
 
         <div class="center">
-            <div class="property-card">
+            <div id="{{ question.question_number }}" onclick="activeswitch('{{ question.question_number }}')" class="property-card">
                 <div class="property-image"
                      style="background-image:url('{% static 'cards/img' %}/{{ question.question_group|slice:5|slugify }}.png')">
                     <div class="property-image-title">
@@ -99,6 +103,7 @@
 {% else %}
 <h5>No cards are available.</h5>
 {% endif %}
+
 
 
 </body>

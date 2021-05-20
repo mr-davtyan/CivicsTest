@@ -1,7 +1,7 @@
 # Dockerfile
 
 # FROM directive instructing base image to build upon
-FROM python:3.7-buster
+FROM python:3.8-buster
 
 RUN apt-get update && apt-get install nginx vim -y --no-install-recommends
 COPY nginx.default /etc/nginx/sites-available/default
