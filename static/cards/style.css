@@ -75,7 +75,6 @@ div.question-group {
 	padding: 10px;
 	background: #303b44;
 	top: 0;
-	box-shadow: 0px 2px 4px 2px #303b44;
 	min-height: 8vh;
 	text-align: center;
 }
@@ -91,7 +90,6 @@ div.question-group {
 	margin: 0;
 	background: #303b44;
 	bottom: 0;
-	box-shadow: 0px -2px 4px 2px #303b44;
 	left: 0;
 	width: 100%;
 	min-height: 8vh;
@@ -154,10 +152,6 @@ a.group-link:hover {
 	background-repeat: no-repeat;
 }
 
-.active {
-	background: #303b44;
-}
-
 /* Bottom Card Section */
 
 .property-description {
@@ -183,6 +177,7 @@ a.group-link:hover {
 	-webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
 	-o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
 	transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+	cursor: pointer;
 }
 
 div.question-number {
@@ -196,9 +191,30 @@ div.question-number {
 	right: 0;
 }
 
-
 /* Property Cards Hover States */
 
+.hover-effect .center .property-card:hover .property-description {
+	height: 0em;
+	padding: 0px 1em;
+}
+
+.hover-effect .center .property-card:hover .property-image {
+	height: 22em;
+}
+
+.hover-effect .center .property-card:hover .property-question-number {
+	background-color: white;
+}
+
+.hover-effect .center .property-card:hover .property-question-number .question-number {
+	color: #303b44;
+}
+
+.hover-effect .center .property-card:hover .property-image-title {
+	opacity: 1;
+}
+
+/* Property Cards Active States controls by JS*/
 .active .property-description {
 	height: 0em;
 	padding: 0px 1em;
@@ -208,21 +224,16 @@ div.question-number {
 	height: 22em;
 }
 
-.active  .property-question-number {
+.active .property-question-number {
 	background-color: white;
 }
 
-.active  .property-question-number:hover {
-	background-color: #303b44;
-	cursor: pointer;
-}
-
-.active  .property-question-number .question-number {
+.active .property-question-number .question-number {
 	color: #303b44;
 }
 
-.active .property-question-number:hover .question-number {
-	color: white;
+.active .property-image-title {
+	opacity: 1;
 }
 
 .property-image-title {
@@ -234,10 +245,6 @@ div.question-number {
 	color: black;
 	font-size: 1.2em;
 	z-index: 60;
-}
-
-.active  .property-image-title {
-	opacity: 1;
 }
 
 ul.answer-ul {
@@ -258,6 +265,14 @@ ul.answer-ul {
 
 .highlighted {
     border: 2px solid #bd7407;
+    cursor: not-allowed;
+    display: inline-block;  /* For IE11/ MS Edge bug */
+    pointer-events: none;
+}
+
+.highlighted-mix-button {
+    border: 2px solid #bd7407;
+    cursor: pointer;
 }
 
 /* Detecting mobile devices */

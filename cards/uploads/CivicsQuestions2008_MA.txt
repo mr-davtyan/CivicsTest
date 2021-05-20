@@ -296,17 +296,25 @@ B: System of Government
 
 36. What are two Cabinet-level positions? 
 
-. Secretary of Commerce 
+. Secretary of Agriculture
 
-. Secretary of Defense 
+. Secretary of Commerce
 
-. Secretary of Education 
+. Secretary of Defense
 
-. Secretary of Energy 
+. Secretary of Education
 
-. Secretary of Labor 
+. Secretary of Energy
 
-. Secretary of State 
+. Secretary of Homeland Security
+
+. Secretary of Labor
+
+. Secretary of State
+
+. Secretary of Transportation
+
+. Secretary of the Treasury
 
 . Attorney General 
 
@@ -810,8 +818,6 @@ C: Recent American History and Other Important Historical Information
 
 . Sioux 
 
-. Chippewa 
-
 . Choctaw 
 
 . Pueblo 
@@ -824,29 +830,13 @@ C: Recent American History and Other Important Historical Information
 
 . Blackfeet 
 
-. Seminole 
-
 . Cheyenne 
 
 . Arawak 
 
 . Shawnee 
 
-. Mohegan 
-
-. Huron 
-
-. Oneida 
-
-. Lakota 
-
-. Crow 
-
-. Teton 
-
-. Hopi 
-
-. Inuit 
+. Mohegan
 
 
 

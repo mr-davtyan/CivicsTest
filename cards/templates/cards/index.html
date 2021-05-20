@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    {% if order_changed %}
-        <meta http-equiv="refresh" content="0; URL=?question_group={{ current_group }}&num-objects={{ num_objects }}" />
+    {% if refresh %}
+        <meta http-equiv="refresh" content="0; URL=/" />
     {% endif %}
     {% load static %}
     <meta charset="utf-8">
@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'cards/style.css' %}">
     <script src="{% static 'cards/app.js' %}"></script>
 </head>
-<body>
+<body onload="removeHover()">
 
 
 {% if latest_question_list %}
@@ -22,18 +22,18 @@
     {% for group in groups_list %}
     <div class="group-link-container">
         <a class="group-link{% ifequal current_group group %} highlighted{% endifequal %}"
-           href="?question_group={{ group }}&num-objects={{ num_objects }}">{{ group }}</a>
+           href="?question-group={{ group }}">{{ group }}</a>
     </div>
     {% endfor %}
 </div>
 
 <div class="cards_container">
-    <div class="cards">
+    <div class="cards hover-effect">
 
         {% for question in latest_question_list %}
 
         <div class="center">
-            <div id="{{ question.question_number }}" onclick="activeswitch('{{ question.question_number }}')" class="property-card">
+            <div id="{{ question.question_number }}" onclick="active_switch('{{ question.question_number }}')" class="property-card">
                 <div class="property-image"
                      style="background-image:url('{% static 'cards/img' %}/{{ question.question_group|slice:5|slugify }}.png')">
                     <div class="property-image-title">
@@ -67,9 +67,9 @@
     <div class="pagination">
         <span class="step-links ">
             {% if latest_question_list.has_previous %}
-                <a class="group-link" href="?question_group={{ current_group }}&num-objects={{ num_objects }}&page=1">&laquo; first</a>
+                <a class="group-link" href="?page=1">&laquo; first</a>
                 <a class="group-link"
-                   href="?question_group={{ current_group }}&num-objects={{ num_objects }}&page={{ latest_question_list.previous_page_number }}">prev</a>
+                   href="?page={{ latest_question_list.previous_page_number }}">prev</a>
             {% endif %}
             {% if latest_question_list.has_previous and latest_question_list.has_next %}
                  <span class="group-link"> {{ latest_question_list.number }} / {{ latest_question_list.paginator.num_pages }}</span>
@@ -78,9 +78,9 @@
             {% endif %}
             {% if latest_question_list.has_next %}
                 <a class="group-link"
-                   href="?question_group={{ current_group }}&num-objects={{ num_objects }}&page={{ latest_question_list.next_page_number }}">next</a>
+                   href="?page={{ latest_question_list.next_page_number }}">next</a>
                 <a class="group-link"
-                   href="?question_group={{ current_group }}&num-objects={{ num_objects }}&page={{ latest_question_list.paginator.num_pages }}">last &raquo;</a>
+                   href="?page={{ latest_question_list.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
     </div>
@@ -89,13 +89,13 @@
     <div class="pagination">
         {% for i in num_objects_array %}
         <a class="group-link{% ifequal num_objects i %} highlighted{% endifequal %}"
-           href="?question_group={{ current_group }}&num-objects={{ i }}">{{ i }}</a>
+           href="?num-objects={{ i }}">{{ i }}</a>
         {% endfor %}
 
-        <a class="group-link{% if mix_order %} highlighted{% endif %} separator"
-           href="?question_group={{ current_group }}&num-objects={{ num_objects }}&order=mix">MIX</a>
+        <a class="group-link{% if mix_order %} highlighted-mix-button{% endif %} separator"
+           href="?next={{ currentUrl }}&order=mix">MIX</a>
         <a class="group-link{% if not mix_order %} highlighted{% endif %}"
-           href="?question_group={{ current_group }}&num-objects={{ num_objects }}&order=straight">SORT</a>
+           href="?order=straight">SORT</a>
     </div>
 </div>
 

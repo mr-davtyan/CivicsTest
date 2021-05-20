@@ -23,5 +23,16 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ['question_text']
 
 
+class QuestionsUpdateAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['file_name']}),
+        (None, {'fields': ['file']}),
+        (None, {'fields': ['file_description']}),
+    ]
+    list_display = ('file_name', 'file', 'file_description')
+    list_filter = ['file_name']
+    search_fields = ['file_name', 'file_description']
+
+
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(QuestionsUpdate)
+admin.site.register(QuestionsUpdate, QuestionsUpdateAdmin)

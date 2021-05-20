@@ -18,8 +18,6 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         questions_all = []
-        # for i in list(Question.objects.all().order_by('question_number')):
-        #     questions_all.append(i)
 
         [questions_all.append(i) for i in list(Question.objects.all().order_by('question_number'))]
 
@@ -29,69 +27,85 @@ class IndexView(generic.ListView):
             self.request.session.create()
         self.request.session.set_expiry(864000)
 
+        # in case DB changed when user has an active session
+        if len(self.request.session.get('order', list(range(0, len(questions_all))))) != len(questions_all):
+            for key in list(self.request.session.keys()):
+                if not key.startswith("_"):  # skip keys set by the django system
+                    del self.request.session[key]
+            self.request.session.modified = True
+            return questions_all
+
         if get_request.get('order'):
-            user_order = list(range(0, len(questions_all)))
+            self.request.session['mix_order'] = (False if get_request.get('order').__eq__("straight") else True)
             self.request.session['order_changed'] = True
-            if get_request.get('order').__eq__("straight"):
-                self.request.session['order_type'] = "straight"
-            else:
-                shuffle(user_order)
-                self.request.session['order_type'] = "mix"
-            self.request.session['order'] = user_order
         else:
+            self.request.session['mix_order'] = self.request.session.get('mix_order', False)
             self.request.session['order_changed'] = False
 
-        # in case DB changed whe user has an active session
-        # todo check the len of current user order and len len(questions_all). if different - rebuild the order
-        if len(self.request.session.get('order', len(questions_all)) != len(questions_all)):
-            self.request.session['order'] = list(range(0, len(questions_all)))
+        if len(get_request) > 0:
+            self.request.session['refresh'] = True
+            self.request.session['current_page'] = (get_request.get('page') if get_request.get('page') else 1)
+        else:
+            self.request.session['refresh'] = False
+            self.request.session['current_page'] = self.request.session.get('current_page', 1)
+
+        group_current = self.request.session.get('current_group', "All")
+        if get_request.get('question-group'):
+            self.request.session['group_changed'] = True
+            self.request.session['current_group'] = get_request.get('question-group')
+            self.request.session['current_page'] = 1
+        else:
+            self.request.session['group_changed'] = False
+            self.request.session['current_group'] = group_current
+            self.request.session['current_page'] = self.request.session.get('current_page', 1)
+
+        self.request.session['num_objects'] = (get_request.get('num-objects') if get_request.get('num-objects')
+                                               else self.request.session.get('num_objects', self.paginate_by))
+
+        if self.request.session.get('order_changed', False):
+            if self.request.session.get('mix_order', False):
+                mix_order = list(range(0, len(questions_all)))
+                shuffle(mix_order)
+                self.request.session['order'] = mix_order
+            else:
+                self.request.session['order'] = list(range(0, len(questions_all)))
+        else:
+            self.request.session['order'] = self.request.session.get('order', list(range(0, len(questions_all))))
 
         questions_for_return_all = []
-        # for i in self.request.session.get('order', list(range(0, len(questions_all)))):
-        #     questions_for_return_all.append(questions_all[i])
-        [questions_for_return_all.append(questions_all[i]) for i in self.request.session.get('order', list(range(0, len(questions_all))))]
+        [questions_for_return_all.append(questions_all[i]) for i in
+         self.request.session.get('order', list(range(0, len(questions_all))))]
 
-        if get_request.get('question_group'):
-            group_current = get_request.get('question_group')
-            if group_current.__eq__("All"):
-                return questions_for_return_all
-            else:
-                questions_for_return = []
-                for q in questions_for_return_all:
-                    if q.question_group.__eq__(group_current):
-                        questions_for_return.append(q)
-                return questions_for_return
-
-        return questions_for_return_all
+        if group_current.__eq__("All"):
+            return questions_for_return_all
+        else:
+            questions_for_return = []
+            for q in questions_for_return_all:
+                if q.question_group.__eq__(group_current):
+                    questions_for_return.append(q)
+            return questions_for_return
 
     def get_context_data(self, **kwargs):
 
         context = super(IndexView, self).get_context_data(**kwargs)
 
-        get_request = self.request.GET
-
-        current_group = "All"
-        if get_request.get('question_group'):
-            current_group = get_request.get('question_group')
-        context['current_group'] = current_group
+        context['current_group'] = self.request.session.get('current_group', "All")
 
         groups_list = list(Question.objects.values_list('question_group', flat=True).distinct())
         groups_list.insert(0, "All")
         context['groups_list'] = groups_list
 
-        page = (get_request.get('page') if get_request.get('page') else 1)
+        page = self.request.session.get('current_page', 1)
 
-        paginate_by_user = self.request.session.get('paginate-by-user', self.paginate_by)
-        if get_request.get('num-objects'):
-            paginate_by_user = get_request.get('num-objects')
+        paginate_by_user = self.request.session.get('num_objects', self.paginate_by)
 
-        self.request.session['paginate-by-user'] = paginate_by_user
         context['num_objects'] = paginate_by_user
+
         context['num_objects_array'] = ["5", "10", "20", "All"]
 
-        context['mix_order'] = (True if self.request.session.get('order_type', "straight").__eq__("mix") else False)
+        context['mix_order'] = self.request.session.get('mix_order', False)
 
-        context['order_changed'] = (True if self.request.session['order_changed'] else False)
+        context['refresh'] = self.request.session.get('refresh', False)
 
         if paginate_by_user.__eq__("All"):
             context['latest_question_list'] = self.get_queryset()

@@ -45,3 +45,8 @@ class Answer(models.Model):
 
 class QuestionsUpdate(models.Model):
     file = models.FileField(upload_to='cards/uploads')
+    file_name = models.CharField(max_length=200, default='')
+    file_description = models.CharField(max_length=2000, default='')
+
+    def __str__(self):
+        return self.file_name
