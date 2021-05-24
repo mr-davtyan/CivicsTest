@@ -8,13 +8,15 @@ http://civicstest.davtyan.net
 
 ![](https://github.com/mr-davtyan/CivicsTest/blob/master/preview.png?raw=true)
 
-##Docker image:  
+## Docker images:  
 https://hub.docker.com/repository/docker/davtyan/django-civics-test
+https://hub.docker.com/repository/docker/davtyan/django-civics-test-ma
 
 ## Features
 - Django based project.
 - View for mobile devices supported.
-- Keeps user session to save the current order and group.
+- Fully functional if JS is disabled
+- Keeps user session to save the current progress, order and group.
 
 ## Notice
 - The database is prefilled with the questions.
