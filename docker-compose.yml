@@ -2,13 +2,12 @@ version: '3.7'
 
 services:
   nginx:
-    image: nginx:1.19-alpine
+    build: ./nginx
     ports:
       - 80:80
-      - 443:443
     volumes:
       - static_volume:/opt/CivicsTest/static
-      - ./data/nginx:/etc/nginx/conf.d
+    image: davtyan/django-civics-test-nginx
     depends_on:
       - web
     restart: "on-failure"
@@ -24,8 +23,7 @@ services:
       - static_volume:/opt/CivicsTest/static
     env_file:
       - .env
-    image: civicstest
-
+    image: davtyan/django-civics-test-web
     expose:
       - ${APP_PORT}
     restart: "on-failure"

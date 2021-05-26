@@ -288,3 +288,4 @@ $RECYCLE.BIN/
 *.lnk
 
 Dockerfile_CI.txt
+/.env
