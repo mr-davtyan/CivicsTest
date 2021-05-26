@@ -101,7 +101,23 @@
 
 
 {% else %}
-<h5>No cards are available.</h5>
+<div class="header notice" >
+    <h2>No cards are available.</h2>
+    <p>Add cards through the <a class="notice-link" href="/admin">Admin console</a> manually or Upload the questions list from USCIS.</p>
+    <p>Questions update in text-only format can be found on the official USCIS web page:</p>
+    <p><a class="notice-link" href="https://www.uscis.gov/citizenship/find-study-materials-and-resources/study-for-the-test">Official USCIS questions list</a></p>
+    <p>And uploaded through the admin part of the website.</p>
+
+    <a class="notice-link" href="{% url 'cards:update-questions-list-prefilled' %}">
+        Click here to use prefilled questions and answers from the 2008 version of the civics test</a>
+
+    {% for message in messages %}
+      <p><a href="/" class="group-link">{{ message }}</a></p>
+    {% endfor %}
+
+</div>
+
+
 {% endif %}
 
 

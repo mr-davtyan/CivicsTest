@@ -1,5 +1,8 @@
+import os
+from pathlib import Path
 from random import shuffle
 
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import Paginator
 from django.db import transaction
@@ -118,10 +121,24 @@ class IndexView(generic.ListView):
 
 @staff_member_required
 def update_questions_list(*args, **kwargs):
-    print(args)
-
     file_path = QuestionsUpdate.objects.get(id=kwargs["question_list_id"]).file.path
+    if not os.path.isfile(file_path):
+        return HttpResponseRedirect(reverse('admin:cards_questionsupdate_changelist', args=(), current_app='cards'))
+    replace_all_questions(file_path)
+    return HttpResponseRedirect(reverse('admin:cards_questionsupdate_changelist', args=(), current_app='cards'))
 
+
+def update_questions_list_prefilled(request):
+    root_dir = Path(__file__).resolve().parent
+    file_path = os.path.join(root_dir, 'uploads', 'CivicsQuestions2008.txt')
+    if not os.path.isfile(file_path):
+        messages.add_message(request, messages.INFO, 'Could not load the prefilled questions. Click to dismiss.')
+        return HttpResponseRedirect(reverse('cards:index', args=(), current_app='cards'))
+    replace_all_questions(file_path)
+    return HttpResponseRedirect(reverse('cards:index', args=(), current_app='cards'))
+
+
+def replace_all_questions(file_path):
     # wiping all the existing questions
     with transaction.atomic():
         for q_object in Question.objects.all():
@@ -138,5 +155,3 @@ def update_questions_list(*args, **kwargs):
             question.save()
             for count, value in enumerate(q.answer_text):
                 question.answer_set.create(answer_text=value, answer_correct=q.answer_correct[count]).save()
-
-    return HttpResponseRedirect(reverse('admin:cards_questionsupdate_changelist', args=(), current_app='cards'))

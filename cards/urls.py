@@ -10,5 +10,10 @@ urlpatterns = [
         views.update_questions_list,
         name='update-questions-list'
     ),
+    path(
+        'prefilled-update',
+        views.update_questions_list_prefilled,
+        name='update-questions-list-prefilled'
+    ),
 
 ]

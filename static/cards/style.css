@@ -287,5 +287,14 @@ ul.answer-ul {
 	}
 }
 
+.notice {
+    text-decoration: none;
+    color: white;
+}
+
+.notice-link {
+    text-decoration: none;
+    color: wheat;
+}
 
 }
