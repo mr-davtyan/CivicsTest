@@ -1,2 +1,4 @@
 Dockerfile_CI.txt
 venv/
+.env
+/static/

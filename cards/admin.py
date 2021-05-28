@@ -30,7 +30,6 @@ class QuestionsUpdateAdmin(admin.ModelAdmin):
         (None, {'fields': ['file_description']}),
     ]
     list_display = ('file_name', 'file', 'file_description')
-    list_filter = ['file_name']
     search_fields = ['file_name', 'file_description']
 
 

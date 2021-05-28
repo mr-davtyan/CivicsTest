@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 
 from . import views
@@ -15,5 +17,6 @@ urlpatterns = [
         views.update_questions_list_prefilled,
         name='update-questions-list-prefilled'
     ),
+
 
 ]

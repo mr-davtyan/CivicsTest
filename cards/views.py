@@ -120,17 +120,19 @@ class IndexView(generic.ListView):
 
 
 @staff_member_required
-def update_questions_list(*args, **kwargs):
+def update_questions_list(request, *args, **kwargs):
     file_path = QuestionsUpdate.objects.get(id=kwargs["question_list_id"]).file.path
     if not os.path.isfile(file_path):
+        messages.add_message(request, messages.INFO, 'Could not load the prefilled questions. Click to dismiss.')
         return HttpResponseRedirect(reverse('admin:cards_questionsupdate_changelist', args=(), current_app='cards'))
     replace_all_questions(file_path)
-    return HttpResponseRedirect(reverse('admin:cards_questionsupdate_changelist', args=(), current_app='cards'))
+    messages.add_message(request, messages.INFO, 'The questions have been replaced. Click to dismiss.')
+    return HttpResponseRedirect(reverse('cards:index', args=(), current_app='cards'))
 
 
 def update_questions_list_prefilled(request):
-    root_dir = Path(__file__).resolve().parent
-    file_path = os.path.join(root_dir, 'uploads', 'CivicsQuestions2008.txt')
+    root_dir = Path(__file__).resolve().parent.parent
+    file_path = os.path.join(root_dir, 'media', 'cards', 'uploads', 'CivicsQuestions2008.txt')
     if not os.path.isfile(file_path):
         messages.add_message(request, messages.INFO, 'Could not load the prefilled questions. Click to dismiss.')
         return HttpResponseRedirect(reverse('cards:index', args=(), current_app='cards'))

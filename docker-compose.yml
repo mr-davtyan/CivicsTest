@@ -7,26 +7,28 @@ services:
       - 80:80
     volumes:
       - static_volume:/opt/CivicsTest/static
-    image: davtyan/django-civics-test-nginx
+      - media_volume:/opt/CivicsTest/media
+    image: davtyan/django-civics-test-prod-nginx
     depends_on:
       - web
-    restart: "on-failure"
+    restart: "unless-stopped"
   web:
     build: . #build the image for the web service from the dockerfile in parent directory
     command: sh -c "python manage.py makemigrations &&
-                    python manage.py migrate &&
-                    python manage.py initiate_admin &&
-                    python manage.py collectstatic --noinput &&
-                    gunicorn CivicsTest.wsgi:application --bind 0.0.0.0:${APP_PORT} --workers 3"
+      python manage.py migrate &&
+      python manage.py initiate_admin &&
+      python manage.py collectstatic --noinput &&
+      gunicorn CivicsTest.wsgi:application --bind 0.0.0.0:${APP_PORT} --workers 3"
     volumes:
-      - .:/CivicsTest:rw # map data and files from parent directory in host to microservice directory in docker containe
+      - .:/CivicsTest:rw # map data and files from parent directory in host to main directory in docker container
       - static_volume:/opt/CivicsTest/static
+      - media_volume:/opt/CivicsTest/media
     env_file:
       - .env
-    image: davtyan/django-civics-test-web
+    image: davtyan/django-civics-test-prod-web
     expose:
       - ${APP_PORT}
-    restart: "on-failure"
+    restart: "unless-stopped"
     depends_on:
       - db
   db:
@@ -39,9 +41,10 @@ services:
       - POSTGRES_DB=${DB_NAME}
       - PGPORT=${DB_PORT}
       - POSTGRES_USER=${POSTGRES_USER}
-    restart: "on-failure"
+    restart: "unless-stopped"
 
 
 volumes:
   postgres_data:
   static_volume:
+  media_volume:

@@ -3,12 +3,14 @@
 FROM python:3.8.3-alpine
 
 ENV CIVICS_TEST=/opt/CivicsTest
-#RUN addgroup -S $APP_USER && adduser -S $APP_USER -G $APP_USER
-# set work directory
-
-RUN mkdir -p $CIVICS_TEST
 
 # where the code lives
+RUN mkdir -p $CIVICS_TEST
+
+# copy project
+COPY . $CIVICS_TEST
+
+# set work directory
 WORKDIR $CIVICS_TEST
 
 # set environment variables
@@ -23,8 +25,7 @@ RUN apk update \
     && apk --no-cache add musl-dev linux-headers g++
 # install dependencies
 RUN pip install --upgrade pip
-# copy project
-COPY . $CIVICS_TEST
+
 RUN pip install -r requirements.txt
 
 CMD ["/bin/bash", "/opt/CivicsTest/start-server.sh"]

@@ -27,6 +27,13 @@
     {% endfor %}
 </div>
 
+{% for message in messages %}
+<br>
+    <div class="header notice">
+      <p><a href="/" class="notice-link group-link">{{ message }}</a></p>
+    </div>
+{% endfor %}
+
 <div class="cards_container">
     <div class="cards hover-effect">
 
