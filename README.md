@@ -10,6 +10,7 @@ http://civicstest.davtyan.net
 
 ## Docker images:  
 https://hub.docker.com/r/davtyan/django-civics-test
+
 https://hub.docker.com/r/davtyan/django-civics-test-ma
 
 ## Features
