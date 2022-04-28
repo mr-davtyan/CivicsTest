@@ -9,8 +9,8 @@ http://civicstest.davtyan.net
 ![](https://github.com/mr-davtyan/CivicsTest/blob/master/preview.png?raw=true)
 
 ## Docker images:  
-https://hub.docker.com/repository/docker/davtyan/django-civics-test
-https://hub.docker.com/repository/docker/davtyan/django-civics-test-ma
+https://hub.docker.com/r/davtyan/django-civics-test
+https://hub.docker.com/r/davtyan/django-civics-test-ma
 
 ## Features
 - Django based project.
